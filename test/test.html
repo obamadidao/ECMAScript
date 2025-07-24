@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quản lý Sinh viên</title>
+  <style>
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    form { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h2>Danh sách Sinh viên</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Họ tên</th>
+        <th>Tuổi</th>
+        <th>Giới tính</th>
+        <th>Ngành</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+
+  <h3>Thêm Sinh viên</h3>
+  <form id="formAdd">
+    <input type="text" id="name" placeholder="Họ tên" required>
+    <input type="number" id="age" placeholder="Tuổi" required>
+    <select id="gender">
+      <option value="Nam">Nam</option>
+      <option value="Nữ">Nữ</option>
+    </select>
+    <input type="text" id="major" placeholder="Ngành" required>
+    <button type="submit">Thêm</button>
+  </form>
+<h3 id="editTitle">Sửa Sinh viên</h3>
+<form id="formEdit">
+
+    <input type="text" id="edit-name" placeholder="Họ tên" required>
+    <input type="number" id="edit-age" placeholder="Tuổi" required>
+    <select id="edit-gender">
+      <option value="Nam">Nam</option>
+      <option value="Nữ">Nữ</option>
+    </select>
+    <input type="text" id="edit-major" placeholder="Ngành" required>
+    <button type="submit">Cập nhật</button>
+  </form>
+
+  <script src="test.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản lý sinh viên</title>
+</head>
+<body>
+  <h2>Danh sách sinh viên</h2>
+  <table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Họ tên</th>
+        <th>Tuổi</th>
+        <th>Giới tính</th>
+        <th>Ngành</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+
+  <h2>Thêm sinh viên mới</h2>
+  <form id="formAddStudent">
+    <input type="text" id="name" placeholder="Họ tên" required />
+    <input type="number" id="age" placeholder="Tuổi" required />
+    <select id="gender">
+      <option value="Nam">Nam</option>
+      <option value="Nữ">Nữ</option>
+    </select>
+    <input type="text" id="major" placeholder="Ngành học" required />
+    <button type="submit">Thêm</button>
+  </form>
+
+  <h2 id="editTitle" style="display:none;">Sửa sinh viên</h2>
+  <form id="formEditStudent" style="display: none;">
+    <input type="text" id="edit-name" placeholder="Họ tên" required />
+    <input type="number" id="edit-age" placeholder="Tuổi" required />
+    <select id="edit-gender">
+      <option value="Nam">Nam</option>
+      <option value="Nữ">Nữ</option>
+    </select>
+    <input type="text" id="edit-major" placeholder="Ngành học" required />
+    <button type="submit">Cập nhật</button>
+    <button type="button" onclick="cancelEdit()">Hủy</button>
+  </form>
+
+  <script src="lesson3.js"></script>
+</body>
+</html>
