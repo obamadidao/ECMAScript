@@ -53,6 +53,8 @@ function deleteStudent(index){
     }
 }
 // Cập nhật sinh viên
+
+
 document.getElementById("formEdit").addEventListener("submit", (e) => {
   e.preventDefault();
   if (editingIndex !== -1) {
@@ -69,7 +71,7 @@ document.getElementById("formEdit").addEventListener("submit", (e) => {
   }
 });
 
-function edit(index) {
+function editStudent(index) {
   editingIndex = index;
   var sv = arrSv[index];
   document.getElementById("edit-name").value = sv.name;

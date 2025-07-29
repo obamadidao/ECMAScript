@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h2>Danh sách todo</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Tên nhiệm vụ</th>
+        <th>Ngày hết hạn</th>
+        <th>Độ ưu tiên</th>
+        <th>Tình trạng</th>
+        <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+</table>
+<h3>Thêm nghiệm vụ</h3>
+<form id="formAdd">
+    <input type="text" id="tennhiemvu" placeholder="Tên nhiệm vụ" required>
+    <input type="date" id="ngayhethan" placeholder="Ngày hết hạn" required>
+    <select id="douutien">
+      <option value="Cao">Cao</option>
+      <option value="Trung Bình">Trung Bình</option>
+      <option value="Thấp">Thấp</option>
+    </select>
+    <div>
+      <label><input type="radio" name="tinhtrang" value="Hoàn thiện" required> Hoàn thiện</label>
+      <label><input type="radio" name="tinhtrang" value="Chờ thực hiện"> Chờ thực hiện</label>
+      <label><input type="radio" name="tinhtrang" value="Đang thực hiện"> Đang thực hiện</label>
+    </div>
+    <button type="submit">Thêm</button>
+</form>
+<h3 id="editTitle">Sửa nhiệm vụ</h3>
+<form id="formEdit">
+<form id="formEdit">
+    <input type="text" id="edit-tennhiemvu" placeholder="Tên nhiệm vụ" required>
+    <input type="date" id="edit-ngayhethan" placeholder="Ngày hết hạn" required>
+    <select id="edit-douutien">
+      <option value="Cao">Cao</option>
+      <option value="Trung Bình">Trung Bình</option>
+      <option value="Thấp">Thấp</option>
+    </select>
+    <div>
+      <label><input type="radio" name="edit-tinhtrang" value="Hoàn thiện" required> Hoàn thiện</label>
+      <label><input type="radio" name="edit-tinhtrang" value="Chờ thực hiện"> Chờ thực hiện</label>
+      <label><input type="radio" name="edit-tinhtrang" value="Đang thực hiện"> Đang thực hiện</label>
+    </div>
+    <button type="submit">Lưu</button>
+</form>
+    <script src="thi.js"></script>
+</body>
+</html>
