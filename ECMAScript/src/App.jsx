@@ -1,32 +1,30 @@
-// src/App.jsx
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import HomePage from "./pages/HomePage";
-import AddTask from "./pages/AddTask";
-import EditTask from "./pages/EditTask";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
-import NotFound from "./pages/NotFound";
+import { Route, Routes } from "react-router";
+import Home from "./components/Home";
+import CoreType from "./components/CoreType";
+import ListProduct from "./components/ListProduct";
+import FormCreateProduct from "./components/FormCreateProduct";
+import ClientLayout from "./Layouts/ClientLayout";
+import FormUpdateProduct from "./components/FormUpdateProduct";
+import Register from "./components/Register";
+import Login from "./components/Login";
 
-const App = () => {
+function App() {
   return (
-    <Router>
-      <Header />
-      <main className="min-h-screen px-4 py-6 max-w-7xl mx-auto">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/add" element={<AddTask />} />
-          <Route path="/edit/:id" element={<EditTask />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
-      <Footer />
-    </Router>
+    <>
+      <Routes>
+        <Route path="/" element={<ClientLayout />}>
+          <Route index element={<Home />} />
+          <Route path="/core-type" element={<CoreType />} />
+          <Route path="/products" element={<ListProduct />} />
+          <Route path="/create-product" element={<FormCreateProduct />} />
+          <Route path="/update-product/:id" element={<FormUpdateProduct />} />
+        </Route>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+
+      </Routes>
+    </>
   );
-};
+}
 
 export default App;
