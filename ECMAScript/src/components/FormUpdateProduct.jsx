@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ProductSchema } from "../Schemas/Product";
 
 const FormUpdateProduct = () => {
   const { id } = useParams();
@@ -10,7 +12,9 @@ const FormUpdateProduct = () => {
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm();
+  } = useForm({
+    resolver: zodResolver(ProductSchema),
+  });
 
   const navigate = useNavigate();
 
@@ -41,11 +45,9 @@ const FormUpdateProduct = () => {
       <h1 className="text-2xl font-bold mb-5 text-center">Update Product</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-5">
-          <label htmlFor="name" className="block mb-2">
-            Product Name
-          </label>
+          <label htmlFor="name" className="block mb-2">Product Name</label>
           <input
-            {...register("name", { required: "Name is required" })}
+            {...register("name")}
             type="text"
             id="name"
             className="bg-gray-50 border border-gray-300 rounded-lg block w-full p-2"
@@ -56,30 +58,20 @@ const FormUpdateProduct = () => {
         </div>
 
         <div className="mb-5">
-          <label htmlFor="price" className="block mb-2">
-            Price
-          </label>
+          <label htmlFor="price" className="block mb-2">Price</label>
           <input
-            {...register("price", {
-              required: "Price is required",
-              valueAsNumber: true,
-              validate: (v) => !isNaN(v) || "Price must be a number",
-            })}
-            type="text"
+            {...register("price", { valueAsNumber: true })}
+            type="number"
             id="price"
             className="bg-gray-50 border border-gray-300 rounded-lg block w-full p-2"
           />
           {errors.price && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.price.message}
-            </p>
+            <p className="text-red-500 text-sm mt-1">{errors.price.message}</p>
           )}
         </div>
 
         <div className="mb-5">
-          <label htmlFor="description" className="block mb-2">
-            Description
-          </label>
+          <label htmlFor="description" className="block mb-2">Description</label>
           <textarea
             {...register("description")}
             id="description"
@@ -88,11 +80,9 @@ const FormUpdateProduct = () => {
         </div>
 
         <div className="mb-5">
-          <label htmlFor="category" className="block mb-2">
-            Category
-          </label>
+          <label htmlFor="category" className="block mb-2">Category</label>
           <select
-            {...register("category", { required: "Category is required" })}
+            {...register("category")}
             id="category"
             className="bg-gray-50 border border-gray-300 rounded-lg block w-full p-2.5"
           >
@@ -101,9 +91,7 @@ const FormUpdateProduct = () => {
             <option value="SmartPhone">SmartPhone</option>
           </select>
           {errors.category && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.category.message}
-            </p>
+            <p className="text-red-500 text-sm mt-1">{errors.category.message}</p>
           )}
         </div>
 

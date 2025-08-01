@@ -1,19 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom"; // dùng react-router-dom thay vì react-router
-import { z } from "zod";
-
-const ProductSchema = z.object({
-  name: z.string().min(3, { message: "Name is required" }),
-  price: z
-    .number({ invalid_type_error: "Price must be a number" })
-    .min(1, { message: "Price must be at least 1" }),
-  description: z.string(),
-  category: z.enum(["Laptop", "SmartPhone"], {
-    errorMap: () => ({ message: "Category is required" }),
-  }),
-});
+import { useNavigate } from "react-router-dom";
+import { ProductSchema } from "../Schemas/Product"; 
 
 const FormCreateProduct = () => {
   const {

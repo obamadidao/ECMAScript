@@ -20,6 +20,13 @@
       "description": "Description of Product 3",
       "category": "SmartPhone",
       "id": 3
+    },
+    {
+      "name": "test1",
+      "price": 120000,
+      "description": "wwww",
+      "category": "SmartPhone",
+      "id": 4
     }
   ],
   "users": [
