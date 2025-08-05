@@ -1,13 +1,14 @@
-import React from "react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { AuthSchema } from "../Schemas/Auth";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
 
-// ⚠️ Nếu dùng JavaScript thì không có kiểu "AuthSchemaType"
+export default function Login() {
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
 
-const Login = () => {
   const {
     register,
     handleSubmit,
@@ -16,63 +17,54 @@ const Login = () => {
     resolver: zodResolver(AuthSchema),
   });
 
-  const navigate = useNavigate();
-
-  const handleAuth = async (value) => {
+  const onSubmit = async (data) => {
     try {
-      const { data } = await axios.post("http://localhost:3000/login", value);
-      if (data) {
-        localStorage.setItem("token", data.accessToken);
-        navigate("/products"); // ✅ Điều hướng đến trang sản phẩm
-      }
-    } catch (error) {
-      alert(error?.response?.data || "Login failed");
+      const res = await axios.post("http://localhost:3000/login", data);
+      localStorage.setItem("token", res.data.accessToken);
+      navigate("/");
+    } catch (err) {
+      setError("Sai email hoặc mật khẩu");
     }
   };
 
   return (
-    <div className="w-[500px] mx-auto mt-10 shadow-lg p-10 rounded">
-      <h1 className="text-2xl font-bold mb-5 text-center">Login</h1>
-      <form onSubmit={handleSubmit(handleAuth)}>
-        <div className="mb-5">
-          <label htmlFor="email" className="block mb-2">
-            Email
-          </label>
-          <input
-            {...register("email")}
-            type="email"
-            id="email"
-            className="bg-gray-50 border border-gray-300 rounded-lg block w-full p-2"
-          />
-          {errors.email && (
-            <p className="text-red-500">{errors.email.message}</p>
-          )}
-        </div>
-
-        <div className="mb-5">
-          <label htmlFor="password" className="block mb-2">
-            Password
-          </label>
-          <input
-            {...register("password")}
-            type="password"
-            id="password"
-            className="bg-gray-50 border border-gray-300 rounded-lg block w-full p-2"
-          />
-          {errors.password && (
-            <p className="text-red-500">{errors.password.message}</p>
-          )}
-        </div>
-
-        <button
-          type="submit"
-          className="text-white mt-5 bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-        >
-          Submit
-        </button>
-      </form>
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="w-full max-w-md bg-white shadow-md rounded-md p-8">
+        <h2 className="text-2xl font-bold mb-6 text-center">Đăng nhập</h2>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div>
+            <label className="block font-medium">Email:</label>
+            <input
+              type="email"
+              {...register("email")}
+              className="w-full border border-gray-300 p-2 rounded"
+            />
+            {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+          </div>
+          <div>
+            <label className="block font-medium">Mật khẩu:</label>
+            <input
+              type="password"
+              {...register("password")}
+              className="w-full border border-gray-300 p-2 rounded"
+            />
+            {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+          >
+            Đăng nhập
+          </button>
+        </form>
+        <p className="mt-4 text-center text-sm">
+          Chưa có tài khoản?{" "}
+          <Link to="/register" className="text-blue-600 hover:underline">
+            Đăng ký ngay
+          </Link>
+        </p>
+      </div>
     </div>
   );
-};
-
-export default Login;
+}

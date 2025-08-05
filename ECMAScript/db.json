@@ -39,6 +39,11 @@
       "email": "olivier@mail.com",
       "password": "$2a$10$KDuT.bcbekU1jtcuI8Uny.Rgp.CsMUPW2BbA9BWyUpKL41Fvd1WjO",
       "id": 2
+    },
+    {
+      "email": "laohetpin@gmail.com",
+      "password": "$2a$10$oDW4wRqHkuip.l.YiFgky.8wBsVeeA.8oPAQnjUJw6/GI9UDSqP9.",
+      "id": 3
     }
   ]
 }

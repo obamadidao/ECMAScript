@@ -1,73 +1,91 @@
-import React from "react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { AuthSchema } from "../Schemas/Auth";
+import { z } from "zod";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { AuthSchema } from "../Schemas/Auth"; // Đảm bảo AuthSchema là Zod schema không dùng typescript kiểu `type AuthSchemaType`
+import { useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
 
-const Register = () => {
+const registerSchema = AuthSchema.extend({
+  confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Mật khẩu không khớp",
+  path: ["confirmPassword"],
+});
+
+export default function Register() {
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(AuthSchema),
+    resolver: zodResolver(registerSchema),
   });
 
-  const navigate = useNavigate();
-
-  const handleAuth = async (value) => {
+  const onSubmit = async (data) => {
     try {
-      const { data } = await axios.post("http://localhost:3000/register", value);
-      if (data) {
-        navigate("/login");
-      }
-    } catch (error) {
-      alert(error.response?.data || "Registration failed");
+      await axios.post("http://localhost:3000/register", {
+        email: data.email,
+        password: data.password,
+      });
+      navigate("/login");
+    } catch (err) {
+      setError("Email đã được sử dụng");
     }
   };
 
   return (
-    <div className="w-[500px] mx-auto mt-10 shadow-lg p-10 rounded">
-      <h1 className="text-2xl font-bold mb-5 text-center">Register</h1>
-      <form onSubmit={handleSubmit(handleAuth)}>
-        <div className="mb-5">
-          <label htmlFor="email" className="block mb-2">
-            Email
-          </label>
-          <input
-            {...register("email")}
-            type="email"
-            id="email"
-            className="bg-gray-50 border border-gray-300 rounded-lg block w-full p-2"
-          />
-          {errors.email && (
-            <p className="text-red-500">{errors.email.message}</p>
-          )}
-        </div>
-        <div className="mb-5">
-          <label htmlFor="password" className="block mb-2">
-            Password
-          </label>
-          <input
-            {...register("password")}
-            type="password"
-            id="password"
-            className="bg-gray-50 border border-gray-300 rounded-lg block w-full p-2"
-          />
-          {errors.password && (
-            <p className="text-red-500">{errors.password.message}</p>
-          )}
-        </div>
-        <button
-          type="submit"
-          className="text-white mt-5 bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-        >
-          Submit
-        </button>
-      </form>
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="w-full max-w-md bg-white shadow-md rounded-md p-8">
+        <h2 className="text-2xl font-bold mb-6 text-center">Đăng ký</h2>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div>
+            <label className="block font-medium">Email:</label>
+            <input
+              type="email"
+              {...register("email")}
+              className="w-full border border-gray-300 p-2 rounded"
+            />
+            {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+          </div>
+          <div>
+            <label className="block font-medium">Mật khẩu:</label>
+            <input
+              type="password"
+              {...register("password")}
+              className="w-full border border-gray-300 p-2 rounded"
+            />
+            {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+          </div>
+          <div>
+            <label className="block font-medium">Nhập lại mật khẩu:</label>
+            <input
+              type="password"
+              {...register("confirmPassword")}
+              className="w-full border border-gray-300 p-2 rounded"
+            />
+            {errors.confirmPassword && (
+              <p className="text-red-500">{errors.confirmPassword.message}</p>
+            )}
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
+          >
+            Đăng ký
+          </button>
+        </form>
+        <p className="mt-4 text-center text-sm">
+          Đã có tài khoản?{" "}
+          <Link to="/login" className="text-blue-600 hover:underline">
+            Đăng nhập
+          </Link>
+        </p>
+      </div>
     </div>
   );
-};
-
-export default Register;
+}
